@@ -1,32 +1,39 @@
 package graphics;
 
-
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import bus.uigen.shapes.ALineModel;
 import bus.uigen.shapes.AStringModel;
 import bus.uigen.shapes.AnImageModel;
 import bus.uigen.shapes.OEShapeModel;
 import shapes.FlexibleTextShape;
+import util.annotations.EditablePropertyNames;
+import util.annotations.PropertyNames;
 import util.annotations.StructurePattern;
 import util.annotations.StructurePatternNames;
 
-// @PropertyNames({ "Head", "Arms", "Body", "Waiting", "RaisedHand", "Fed", "StringShape", "VisionLine1", "VisionLine2" })
-// @EditablePropertyNames({ "Waiting", "RaisedHand", "Fed" })
+
+@PropertyNames({ "Head", "RightArm", "LeftArm", "RightLeg", "LeftLeg", "X", "Y", "Body", "Waiting",
+		"PropertyChangeListeners",
+		"Fed", "StringShape",
+		"VisionLine1", "VisionLine2" })
+@EditablePropertyNames({ "Waiting", "X", "Y", "Fed" })
 
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
 
-public class PhilosopherAvatarOEShape implements PhilosopherAvatarOEShapeInterface {
+public class PhilosopherAvatarOEShape extends Locatable implements PhilosopherAvatarOEShapeInterface {
 
 	final static int OFFSET = 100;
 	final static int MINOR_OFFSET = 10;
 	final static int LEFT_ROTATE = 24;
 	final static int RIGHT_ROTATE = 8;
 	final static int BODY_ROTATE = 16;
-	final static int BODY_RADIUS = 50;
+	final static int BODY_RADIUS = 60;
 	final static int BODY_ANGLE = 0;
 	final static int DIVIDER = 2;
+	final static int ARM_RADIUS = 40;
 
 	final static int INITIAL_RADIUS = 40;
 	final static int INITIAL_ANGLE1 = 0;
@@ -35,9 +42,12 @@ public class PhilosopherAvatarOEShape implements PhilosopherAvatarOEShapeInterfa
 	final static int START_Y = 100;
 
 	OEShapeModel head;
-	AngleInterface arms;
+	OEShapeModel leftArm;
+	OEShapeModel rightArm;
 	OEShapeModel body;
 	FlexibleTextShape stringShape;
+	OEShapeModel leftLeg;
+	OEShapeModel rightLeg;
 
 	boolean waiting;
 	boolean raisedHand;
@@ -47,24 +57,51 @@ public class PhilosopherAvatarOEShape implements PhilosopherAvatarOEShapeInterfa
 	OEShapeModel visionLine2;
 
 	public PhilosopherAvatarOEShape(String avatarHead, int initX, int initY) {
+		super(initY, initY);
 		head = new AnImageModel(avatarHead);
 		head.setX(initX);
 		head.setY(initY);
 		visionLine1 = new ALineModel();
 		visionLine2 = new ALineModel();
+		visionLine1.setColor(Color.white);
+		visionLine2.setColor(Color.white);
+		visionLine1.setRadius(60);
+		visionLine2.setRadius(60);
 		body = new ALineModel();
-		stringShape = new AStringModel("Waiting to eat!");
-		stringShape.setX(head.getX() + 70);
-		stringShape.setY(head.getY() - MINOR_OFFSET);
-		arms = new Angle();
-		arms.getLeftLine().rotate(LEFT_ROTATE);
-		arms.getRightLine().rotate(RIGHT_ROTATE);
-		arms.moveTo(head.getX() + 33, head.getY() + 77);
 		body.setX(head.getX() + 33);
 		body.setY(head.getY() + 64);
 		body.setRadius(BODY_RADIUS);
-		body.setAngle(BODY_ROTATE);
+		body.setAngle(Math.PI / 2);
 		body.setColor(Color.WHITE);
+		stringShape = new AStringModel("Waiting to eat!");
+		stringShape.setColor(Color.WHITE);
+		stringShape.setX(head.getX() + 70);
+		stringShape.setY(head.getY() - MINOR_OFFSET);
+		leftArm = new ALineModel();
+		leftArm.setX(body.getX());
+		leftArm.setY(body.getY() + 20);
+		leftArm.setAngle(LEFT_ROTATE);
+		leftArm.setColor(Color.WHITE);
+		leftArm.setRadius(ARM_RADIUS);
+		rightArm = new ALineModel();
+		rightArm.setX(body.getX());
+		rightArm.setY(body.getY() + 20);
+		rightArm.setAngle(RIGHT_ROTATE);
+		rightArm.setColor(Color.WHITE);
+		rightArm.setRadius(ARM_RADIUS);
+		leftLeg = new ALineModel();
+		leftLeg.setX(body.getX());
+		leftLeg.setY(body.getY() + BODY_RADIUS);
+		leftLeg.setColor(Color.WHITE);
+		leftLeg.setRadius(ARM_RADIUS);
+		leftLeg.setAngle(95);
+		rightLeg = new ALineModel();
+		rightLeg.setX(body.getX());
+		rightLeg.setY(body.getY() + BODY_RADIUS);
+		rightLeg.setColor(Color.WHITE);
+		rightLeg.setRadius(ARM_RADIUS);
+		rightLeg.setAngle(103);
+
 		waiting = false;
 		raisedHand = false;
 		isFed = false;
@@ -81,8 +118,23 @@ public class PhilosopherAvatarOEShape implements PhilosopherAvatarOEShapeInterfa
 	}
 
 	@Override
-	public AngleInterface getArms() {
-		return arms;
+	public OEShapeModel getLeftArm() {
+		return leftArm;
+	}
+
+	@Override
+	public OEShapeModel getRightArm() {
+		return rightArm;
+	}
+
+	@Override
+	public OEShapeModel getLeftLeg() {
+		return leftLeg;
+	}
+
+	@Override
+	public OEShapeModel getRightLeg() {
+		return rightLeg;
 	}
 
 	@Override
@@ -98,16 +150,6 @@ public class PhilosopherAvatarOEShape implements PhilosopherAvatarOEShapeInterfa
 	@Override
 	public FlexibleTextShape getStringShape() {
 		return stringShape;
-	}
-
-	@Override
-	public boolean getRaisedHand() {
-		return waiting;
-	}
-
-	@Override
-	public void setRaisedHand(boolean handStatus) {
-		waiting = handStatus;
 	}
 
 	@Override
@@ -144,16 +186,14 @@ public class PhilosopherAvatarOEShape implements PhilosopherAvatarOEShapeInterfa
 	}
 
 	@Override
-	public void addPropertyChangeListener(AngleInterface angle, PropertyChangeListener propertySupport) {
-		addPropertyChangeListener(angle.getLeftLine(), propertySupport);
-		addPropertyChangeListener(angle.getRightLine(), propertySupport);
-	}
-
-	@Override
 	public void addPropertyChangeListener(PropertyChangeListener arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
+	public List<PropertyChangeListener> getPropertyChangeListeners() {
+		return propertySupport.generateList();
+	}
 
 }

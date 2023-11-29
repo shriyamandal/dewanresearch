@@ -15,6 +15,14 @@ public interface RotatingLineInterface extends PropertyListenerRegisterer {
 
 	public int getWidth();
 
+	public int getX();
+
+	public int getY();
+
+	public void setX(int newX);
+
+	public void setY(int newY);
+
 	public int getHeight();
 
 	public double getRadius();
@@ -42,5 +50,9 @@ public interface RotatingLineInterface extends PropertyListenerRegisterer {
 	public void setColor(int color);
 
 	Color getColor();
+
+	public void lock();
+
+	public void unlock();
 
 }

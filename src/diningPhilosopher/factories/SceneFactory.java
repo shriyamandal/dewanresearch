@@ -18,6 +18,7 @@ public class SceneFactory {
 			editor = bus.uigen.ObjectEditor.edit(scene);
 			// can set color here
 			editor.getDrawVirtualComponent().setBackground(Color.BLACK);
+//			panel.add(button1);
 			editor.hideMainPanel();
 			// need to move table+chars then
 			editor.setSize(1000, 700);

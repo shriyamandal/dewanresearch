@@ -447,11 +447,6 @@ public class DiningSceneOeShape implements DiningSceneInterface {
 		return angle;
 	}
 
-	// when wanting vision line to change, put in the philosopher class
-	// everytime you want it to appear set it to height/width what you want
-	// set them to 0,0
-
-
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getSource().toString().equals("Philosopher 0")) {
@@ -680,6 +675,7 @@ if (evt.getSource().toString().equals("Chopstick 2")) {
 }
 if (evt.getSource().toString().equals("Chopstick 3")) {
 	if (evt.getPropertyName().toString().equals("Used") & evt.getNewValue().toString().equals("true")) {
+		// TEST
 		philosopher4.getVisionLine2().setRadius(110);
 		philosopher5.getVisionLine2().setRadius(110);
 		System.out.println("vision line");

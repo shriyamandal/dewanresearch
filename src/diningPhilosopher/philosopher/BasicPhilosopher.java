@@ -3,7 +3,6 @@ package diningPhilosopher.philosopher;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 import diningPhilosopher.chopstick.Chopstick;
 import util.models.BasicPropertyNotificationSupport;
@@ -123,8 +122,15 @@ public class BasicPhilosopher implements Philosopher {
 	}
 
 	protected void eat(long aTimeToEat) {
+		System.out.println(Thread.currentThread() + " " + this + " " + aTimeToEat);
+		// System.out.println("before eat Time" + " " + System.currentTimeMillis());
+		long beforeEatTime = System.currentTimeMillis();
 		try {
 			Thread.sleep(aTimeToEat);
+			long afterSleepTime = System.currentTimeMillis();
+
+			System.out.println(this + " " + "Time difference: " + " " + (afterSleepTime - beforeEatTime));
+			// System.out.println("after sleep Time" + " " + System.currentTimeMillis());
 //			setFed(true);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

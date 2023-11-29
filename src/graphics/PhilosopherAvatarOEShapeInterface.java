@@ -1,6 +1,7 @@
 package graphics;
 
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import bus.uigen.shapes.OEShapeModel;
 import shapes.FlexibleTextShape;
@@ -12,17 +13,11 @@ public interface PhilosopherAvatarOEShapeInterface extends PropertyListenerRegis
 
 	public OEShapeModel getBody();
 
-	public AngleInterface getArms();
-
 	public boolean getWaiting();
 
 	public void setWaiting(boolean waitStatus);
 
 	public FlexibleTextShape getStringShape();
-
-	public boolean getRaisedHand();
-
-	public void setRaisedHand(boolean handStatus);
 
 	public boolean getFed();
 
@@ -36,8 +31,15 @@ public interface PhilosopherAvatarOEShapeInterface extends PropertyListenerRegis
 
 	public void addPropertyChangeListener(RotatingLineInterface rotatingLine, PropertyChangeListener propertySupport);
 
-	public void addPropertyChangeListener(AngleInterface angle, PropertyChangeListener propertySupport);
-
 	public void addPropertyChangeListener(PropertyChangeListener arg0);
 
+	public List<PropertyChangeListener> getPropertyChangeListeners();
+
+	public OEShapeModel getRightArm();
+
+	public OEShapeModel getLeftArm();
+
+	public OEShapeModel getLeftLeg();
+
+	public OEShapeModel getRightLeg();
 }

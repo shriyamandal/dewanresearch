@@ -38,7 +38,9 @@ public interface PhilosopherAvatarInterface extends PropertyListenerRegisterer {
 
 	// ElbowInterface getLeftElbow();
 
-	AngleInterface getArms();
+	public AngleInterface getArms();
+
+	public AngleInterface getLegs();
 
 	StringShapeInterface getStringShape();
 

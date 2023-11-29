@@ -2,6 +2,7 @@
 package graphics;
 import java.beans.PropertyChangeListener;
 
+import bus.uigen.shapes.AnImageModel;
 import bus.uigen.shapes.OEShapeModel;
 
 public interface DiningSceneInterface extends PropertyChangeListener {
@@ -66,4 +67,31 @@ public interface DiningSceneInterface extends PropertyChangeListener {
 
 	OEShapeModel getEmptySpag5();
 
+	public void pickUpLeftChopstick(AnImageModel head);
+
+	public void pickUpLeftChopstickString(String philosopher);
+
+	public void pickUpRightChopstick(AnImageModel head);
+
+	public void pickUpRightChopstickString(String philosopher);
+
+	public void putDownLeftChopstick(AnImageModel head);
+
+	public void putDownLeftChopstickString(String philosopher);
+
+	public void putDownRightChopstick(AnImageModel head);
+
+	public void putDownRightChopstickString(String philosopher);
+
+	public RotatingLineInterface getChopstickLine1();
+
+	public RotatingLineInterface getChopstickLine2();
+
+	public RotatingLineInterface getChopstickLine3();
+
+	public RotatingLineInterface getChopstickLine4();
+
+	public RotatingLineInterface getChopstickLine5();
+	
 }
+

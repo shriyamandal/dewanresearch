@@ -32,6 +32,7 @@ public class PhilosopherAvatar implements PhilosopherAvatarInterface {
 
 	PhilosopherHeadInterface head;
 	AngleInterface arms;
+	AngleInterface legs;
 	// ElbowInterface rightElbow;
 	// ElbowInterface leftElbow;
 	RotatingLineInterface body;
@@ -67,6 +68,9 @@ public class PhilosopherAvatar implements PhilosopherAvatarInterface {
 		arms = new Angle();
 		arms.getLeftLine().rotate(LEFT_ROTATE);
 		arms.getRightLine().rotate(RIGHT_ROTATE);
+		legs = new Angle();
+		legs.getLeftLine().rotate(LEFT_ROTATE);
+		legs.getRightLine().rotate(RIGHT_ROTATE);
 		// now fix arms
 		arms.moveTo(((Locatable) head).getX() + 33, ((Locatable) head).getY() + 77);
 		body = new RotatingLine(((Locatable) head).getX() + 33, ((Locatable) head).getY() + 64, BODY_RADIUS,
@@ -104,6 +108,11 @@ public class PhilosopherAvatar implements PhilosopherAvatarInterface {
 	@Override
 	public AngleInterface getArms() {
 		return arms;
+	}
+
+	@Override
+	public AngleInterface getLegs() {
+		return legs;
 	}
 
 	@Override

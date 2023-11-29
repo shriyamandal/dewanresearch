@@ -15,4 +15,8 @@ public interface ChopstickInterface extends PropertyChangeListener {
 
 	void moveTo(int x, int y);
 
+	void lock();
+
+	void unlock();
+
 }

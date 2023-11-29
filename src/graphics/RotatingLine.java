@@ -17,8 +17,9 @@ public class RotatingLine extends Locatable implements RotatingLineInterface {
 	int width, height;
 	double radius, angle;
 	RotatingLineInterface newLine;
+	boolean isLocked;
 	boolean used;
-	Stroke strokie = new BasicStroke(1F);
+	Stroke strokie = new BasicStroke(3F);
 	Color theColor = new Color(000000);
 
 	final static int INIT_X = 100;
@@ -32,12 +33,35 @@ public class RotatingLine extends Locatable implements RotatingLineInterface {
 		radius = initRadius;
 		angle = initAngle;
 		used = false;
-
+		isLocked = false;
 	}
 
 	public RotatingLine(int initX, int initY) {
 		super(initX, initY);
 		newLine = new RotatingLine(INIT_X, INIT_X, INIT_RADIUS, INIT_ANGLE);
+		isLocked = false;
+	}
+
+	@Override
+	public synchronized void lock() {
+		if (isLocked) {
+			try {
+				this.wait();
+				// isLocked = true;
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		// new addition
+		isLocked = true;
+	}
+
+	@Override
+	public synchronized void unlock() {
+		// call only when locked
+		isLocked = false;
+		this.notify();
 	}
 
 	@Override
