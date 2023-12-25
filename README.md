@@ -1,2 +1,2 @@
 # DemoCourseProject
-Project to be checked by DemoCourse local and all checks
+Updated demo course project, committing all current progress since old computer is inaccessible.
